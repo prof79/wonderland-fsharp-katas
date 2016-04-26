@@ -62,7 +62,7 @@ let sanitizeString (str: string) =
     let lowerBound = charToInt 'a'
     let upperBound = charToInt 'z'
 
-    str.ToCharArray()
+    str.ToLower().ToCharArray()
     |> Array.filter (fun ch ->
                             let intValue = charToInt ch
                             intValue >= lowerBound && intValue <= upperBound
@@ -210,8 +210,8 @@ let getMessageList (message: Message) =
 /// </summary>
 let performCharacterConversion (operation: char -> char -> char) (key: Keyword) (message: Message) : Message =
 
-    let sanitizedKey = sanitizeString <| key.ToLower()
-    let sanitizedMessage = sanitizeString <| message.ToLower()
+    let sanitizedKey = sanitizeString key
+    let sanitizedMessage = sanitizeString message
 
     let keyList = getKeyList sanitizedKey sanitizedMessage
     let messageList = getMessageList sanitizedMessage
@@ -243,8 +243,8 @@ let decode (key:Keyword) (message:Message) : Message =
 
 let decipher (cipher:Message) (message:Message) : Keyword =
 
-    let sanitizedCipher = sanitizeString <| cipher.ToLower()
-    let sanitizedMessage = sanitizeString <| message.ToString()
+    let sanitizedCipher = sanitizeString cipher
+    let sanitizedMessage = sanitizeString message
 
     let cipherList = getMessageList sanitizedCipher
     let messageList = getMessageList sanitizedMessage
